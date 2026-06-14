@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}{{ profile_user.username }} | Profile{% endblock %}
+{% block content %}
+<div style="max-width:600px; margin:40px auto; background:rgba(255,255,255,0.05); padding:20px; border-radius:15px; box-shadow:0 0 10px rgba(0,0,0,0.3); text-align:center;">
+  
+  <!-- Avatar -->
+  <div style="margin-bottom:20px;">
+    <img src="{{ user.avatar.url }}"
+         alt="Avatar"
+         style="border-radius:50%; border:2px solid #a7c957;">
+  </div>
+
+  <!-- Basic Info -->
+  <h2 style="color:#d3ffb5;">{{ profile_user.username }}’s Grove</h2>
+  <p>Email: <span style="color:#a7c957;">{{ profile_user.email }}</span></p>
+  <p>Joined: {{ profile_user.date_joined|date:"F j, Y" }}</p>
+
+  {% if profile_user.bio %}
+    <p style="margin-top:10px; font-style:italic;">“{{ profile_user.bio }}”</p>
+  {% endif %}
+
+  <hr style="border-color:#3a4a3a; margin:20px 0;">
+
+  <!-- Action Buttons -->
+  {% if user == profile_user %}
+  <div style="display:flex; flex-direction:column; gap:10px;">
+    <a href="{% url 'create_post' %}" 
+       style="display:block; padding:10px; border-radius:8px; background:#a7c957; color:#1c2a2e; font-weight:bold; text-decoration:none;">
+        Create New Post
+    </a>
+
+    <a href="{% url 'user_posts' profile_user.username %}"
+       style="display:block; padding:10px; border-radius:8px; background:#d3ffb5; color:#1c2a2e; font-weight:bold; text-decoration:none;">
+        View Your Posts
+    </a>
+
+    <a href="{% url 'edit_profile' %}"
+       style="display:block; padding:10px; border-radius:8px; background:#8fd694; color:#1c2a2e; font-weight:bold; text-decoration:none;">
+        Edit Profile
+    </a>
+
+  </div>
+  {% else %}
+  <div style="margin-top:20px;">
+    <a href="{% url 'user_posts' profile_user.username %}"
+       style="color:#d3ffb5; text-decoration:none;">View {{ profile_user.username }}’s Posts</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

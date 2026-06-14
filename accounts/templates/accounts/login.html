@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Login | Sumeru Blog{% endblock %}
+{% block content %}
+  <h2 style="text-align:center;">Enter the Forests of Sumeru</h2>
+
+  {% if error %}
+    <p style="color:#ffb3b3; text-align:center;">{{ error }}</p>
+  {% endif %}
+
+  <form method="post" style="max-width:400px; margin:auto;">
+    <input type="text" name="username" placeholder="Username" required
+           style="width:100%; padding:10px; margin:8px 0; border-radius:8px; border:none;">
+    <input type="password" name="password" placeholder="Password" required
+           style="width:100%; padding:10px; margin:8px 0; border-radius:8px; border:none;">
+
+    <button type="submit" style="width:100%; padding:10px; border:none; border-radius:8px;
+      background:#a7c957; color:#1c2a2e; font-weight:bold;">Login</button>
+  </form>
+
+  <p style="text-align:center; margin-top:10px;">
+    Don’t have an account? <a href="{% url 'signup' %}" style="color:#d3ffb5;">Sign Up</a>
+  </p>
+{% endblock %}

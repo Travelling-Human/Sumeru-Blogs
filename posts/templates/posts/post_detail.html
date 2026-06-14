@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+  <a href="{% url 'post_list' %}">Back</a>
+  <h1>{{ post.title }}</h1>
+  <p>By <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a> • {{ post.created_at }}</p>
+  <div>
+    <p>{{ post.content|linebreaks }}</p>
+
+    {% if post.media %}
+      {% if ".mp4" in post.media.url or ".webm" in post.media.url %}
+        <video controls style="max-width:100%;"><source src="{{ post.media.url }}"></video>
+      {% else %}
+        <img src="{{ post.media.url }}" alt="media" style="max-width:100%;">
+      {% endif %}
+    {% endif %}
+  </div>
+
+  {% if user.is_authenticated %}
+    <h3>Comments</h3>
+    <form method="post" action="{% url 'add_comment' post.pk %}">
+      <textarea name="content" rows="3" style="width:100%;"></textarea><br>
+      <button type="submit">Add Comment</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}">Login</a> to comment</p>
+  {% endif %}
+
+  <div>
+    {% for c in comments %}
+      <div style="border-top:1px solid #ddd; padding:8px 0;">
+        <b>{{ c.author.username }}</b> — {{ c.created_at }}<br>
+        <p>{{ c.content|linebreaks }}</p>
+      </div>
+    {% empty %}
+      <p>No comments yet.</p>
+    {% endfor %}
+  </div>
+
+  {% if user == post.author %}
+    <p>
+      <a href="{% url 'post_edit' post.pk %}">Edit</a> |
+      <a href="{% url 'post_delete' post.pk %}">Delete</a>
+    </p>
+  {% endif %}
+{% endblock %}

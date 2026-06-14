@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Posts{% endblock %}
+{% block content %}
+  <h1>Posts</h1>
+  {% if posts %}
+    {% for p in posts %}
+      <div style="margin-bottom:16px;padding:12px;border-bottom:1px solid #ccc;">
+        <h2><a href="{% url 'post_detail' p.pk %}">{{ p.title }}</a></h2>
+        <p>By <a href="{% url 'profile' p.author.username %}">{{ p.author.username }}</a> • {{ p.created_at }}</p>
+        <p>{{ p.content|truncatechars:200 }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No posts yet!</p>
+  {% endif %}
+{% endblock %}

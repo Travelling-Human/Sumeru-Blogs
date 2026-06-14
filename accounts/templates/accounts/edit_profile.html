@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Edit Profile | Sumeru Blog{% endblock %}
+{% block content %}
+<div style="max-width:600px; margin:40px auto; background:rgba(255,255,255,0.05); padding:25px; border-radius:15px; box-shadow:0 0 12px rgba(0,0,0,0.4);">
+  <h2 style="text-align:center; color:#d3ffb5;">🌱 Edit Profile</h2>
+
+  <form method="post" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:12px;">
+    <!-- Username (not editable) -->
+    <input type="text" name="username" value="{{ user.username }}" disabled
+           style="padding:10px; border:none; border-radius:8px; background:#2f4f4f; color:#d3ffb5;">
+
+    <!-- Email -->
+    <input type="email" name="email" value="{{ user.email }}" placeholder="Email"
+           style="padding:10px; border:none; border-radius:8px; background:#fff; color:#333;">
+
+    <!-- Bio -->
+    <textarea name="bio" placeholder="Your Bio..." rows="4"
+              style="padding:10px; border:none; border-radius:8px; background:#fff; color:#333;">{{ user.bio }}</textarea>
+
+    <!-- Avatar Upload -->
+    <label style="color:#d3ffb5;">Avatar:</label>
+    {% if user.avatar %}
+      <img src="{{ user.avatar.url }}" alt="Avatar" width="100" height="100"
+           style="border-radius:50%; margin-bottom:10px;">
+    {% endif %}
+    <input type="file" name="avatar" style="color:#d3ffb5;">
+
+    <!-- Save Button -->
+    <button type="submit" name="update_profile"
+            style="padding:10px; border:none; border-radius:8px; background:#a7c957; color:#1c2a2e; font-weight:bold;">
+      💾 Save Profile Changes
+    </button>
+  </form>
+
+  <hr style="margin:25px 0; border-color:rgba(255,255,255,0.2);">
+
+  <!-- Password Change Section -->
+  <h3 style="text-align:center; color:#d3ffb5;">🔒 Change Password</h3>
+  <form method="post" style="display:flex; flex-direction:column; gap:12px;">
+    <input type="password" name="old_password" placeholder="Current Password"
+           style="padding:10px; border:none; border-radius:8px; background:#fff; color:#333;">
+    <input type="password" name="new_password" placeholder="New Password"
+           style="padding:10px; border:none; border-radius:8px; background:#fff; color:#333;">
+    <input type="password" name="confirm_password" placeholder="Confirm New Password"
+           style="padding:10px; border:none; border-radius:8px; background:#fff; color:#333;">
+
+    <button type="submit" name="change_password"
+            style="padding:10px; border:none; border-radius:8px; background:#e9c46a; color:#1c2a2e; font-weight:bold;">
+      🔑 Update Password
+    </button>
+  </form>
+
+  <p style="text-align:center; margin-top:20px;">
+    <a href="{% url 'profile' user.username %}" style="color:#d3ffb5;">⬅ Back to Profile</a>
+  </p>
+</div>
+{% endblock %}

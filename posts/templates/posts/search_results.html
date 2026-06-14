@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+<style>
+  .results-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: left;
+    font-family: 'Crimson Pro', serif;
+  }
+
+  .results-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-family: 'Cinzel', serif;
+    color: #f4e4c1;
+  }
+
+  .result-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 18px 20px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .result-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.1);
+  }
+
+  .result-card a {
+    color: #d3ffb5;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .result-card a:hover {
+    color: #f5ffc7;
+    text-decoration: underline;
+  }
+
+  .result-meta {
+    display: block;
+    font-size: 14px;
+    color: #aaa;
+    margin-top: 4px;
+  }
+
+  .result-snippet {
+    margin-top: 8px;
+    color: #ddd;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+</style>
+
+<div class="results-container">
+  {% if query %}
+    <h2>Search Results for “{{ query }}”</h2>
+  {% else %}
+    <h2>Search Posts</h2>
+  {% endif %}
+
+  {% if results %}
+    {% for post in results %}
+      <div class="result-card">
+        <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+        <small class="result-meta">
+          By {{ post.author.username }} on {{ post.created_at|date:"M d, Y" }}
+        </small>
+        <p class="result-snippet">
+          {{ post.content|truncatewords:25 }}
+        </p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align:center; color:#bbb;">No matching posts found.</p>
+  {% endif %}
+</div>
+{% endblock %}

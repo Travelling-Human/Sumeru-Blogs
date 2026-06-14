@@ -1,0 +1,38 @@
+body {
+    font-family: 'Verdana', sans-serif;
+    background: #f5f1e7;
+    color: #2e2e2e;
+}
+
+h1,h2,h3 {
+    color: #3e4a3f;
+}
+
+.form-container {
+    width: 90%;
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #e7d8b8;
+    border-radius: 10px;
+}
+
+input, textarea, button {
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+button {
+    background: #8cae6b;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.post {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}

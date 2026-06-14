@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block title %}Welcome to Sumeru Blog{% endblock %}
+{% block content %}
+
+<style>
+  .intro {
+    text-align: center;
+    padding: 40px 10px;
+    background: linear-gradient(135deg, #203a43, #2c5364);
+    color: #f1f1f1;
+    border-radius: 15px;
+    margin-bottom: 30px;
+  }
+  .intro h1 {
+    font-family: 'Georgia', serif;
+    font-size: 2em;
+    letter-spacing: 1px;
+  }
+  .intro p {
+    max-width: 600px;
+    margin: auto;
+    font-size: 1.1em;
+  }
+  .categories, .popular {
+    padding: 20px;
+  }
+  .categories h2, .popular h2 {
+    font-family: 'Georgia', serif;
+    border-bottom: 2px solid #a7c957;
+    color: #203a43;
+  }
+  .category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+  }
+  .category {
+    background: #eaf4ec;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .category:hover {
+    background: #a7c957;
+    color: #1c1c1c;
+  }
+  .popular ul {
+    list-style: none;
+    padding: 0;
+  }
+  .popular ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid #dcdcdc;
+  }
+  .popular ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .popular ul li a:hover {
+    color: #a7c957;
+  }
+</style>
+
+<div class="intro">
+  <h1>Welcome to the Forests of Knowledge — Sumeru Blog 🌿</h1>
+  <p>Share your thoughts, discoveries, and stories with the world. Wander through the wisdom of others or plant your own seeds of inspiration.</p>
+  <br>
+  {% if user.is_authenticated %}
+    <a href="{% url 'create_post' %}" style="background:#a7c957; padding:10px 20px; border-radius:8px; color:#1c1c1c; text-decoration:none;">Create a Post</a>
+  {% else %}
+    <a href="{% url 'signup' %}" style="background:#a7c957; padding:10px 20px; border-radius:8px; color:#1c1c1c; text-decoration:none;">Join Now</a>
+  {% endif %}
+</div>
+
+<div class="categories">
+  <h2>Explore Categories</h2>
+  <div class="category-list">
+    {% for cat in categories %}
+      <div class="category">{{ cat }}</div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="popular">
+  <h2>Popular Bloggers</h2>
+  {% if bloggers %}
+    <ul>
+      {% for blogger in bloggers %}
+        <li><a href="{% url 'profile' blogger.username %}">{{ blogger.username }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No bloggers yet!</p>
+  {% endif %}
+</div>
+
+<div class="popular">
+  <h2>Recent Posts</h2>
+  {% if posts %}
+    <ul>
+      {% for post in posts %}
+        <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a> — by {{ post.author.username }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No posts yet! Be the first to write one!</p>
+  {% endif %}
+</div>
+{% endblock %}

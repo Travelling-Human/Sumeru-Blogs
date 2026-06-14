@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}{{ action }} Post{% endblock %}
+{% block content %}
+  <h2>{{ action }} Post</h2>
+  <form method="post" enctype="multipart/form-data">
+    <label>Title</label><br>
+    <input type="text" name="title" value="{{ post.title|default:'' }}" style="width:100%;"><br><br>
+
+    <label>Content</label><br>
+    <textarea name="content" rows="8" style="width:100%;">{{ post.content|default:'' }}</textarea><br><br>
+
+    <label>Category (slug)</label><br>
+    <select name="category">
+      <option value="">-- none --</option>
+      {% for cat in categories %}
+        <option value="{{ cat.slug }}" {% if post and post.category and post.category.slug == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label>Tags (comma separated)</label><br>
+    <input type="text" name="tags" value="{{ post.tags|default:'' }}" style="width:100%;"><br><br>
+
+    <label>Media (image/video)</label><br>
+    <input type="file" name="media"><br>
+    {% if post and post.media %}
+      <p>Current file: <a href="{{ post.media.url }}">{{ post.media.name }}</a></p>
+    {% endif %}
+    <br>
+
+    <button type="submit">{{ action }}</button>
+  </form>
+{% endblock %}
